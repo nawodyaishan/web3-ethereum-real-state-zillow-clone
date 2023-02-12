@@ -15,12 +15,22 @@ contract RealEstate is ERC721URIStorage {
     constructor() ERC721("Real Estate", "REAL"){}
 
     function mint(string memory tokenURI) public returns (uint256){
+        // Increment and Add new token Ids
         _tokenIds.increment();
 
+        // Adding new token by new current Token Id
         uint256 newItemId = _tokenIds.current();
+        // Mint by Internal Mint Function and new Id
         _mint(msg.sender, newItemId);
+        // Setting token Uri
         _setTokenURI(newItemId, tokenURI);
 
         return newItemId;
     }
+
+    function totalSupply() public view returns (uint256) {
+        // Giving how many NFTs currently minted
+        return _tokenIds.current();
+    }
+
 }
