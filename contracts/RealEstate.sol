@@ -17,7 +17,6 @@ contract RealEstate is ERC721URIStorage {
     function mint(string memory tokenURI) public returns (uint256){
         // Increment and Add new token Ids
         _tokenIds.increment();
-
         // Adding new token by new current Token Id
         uint256 newItemId = _tokenIds.current();
         // Mint by Internal Mint Function and new Id
