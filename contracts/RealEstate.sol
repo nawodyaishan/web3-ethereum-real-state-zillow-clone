@@ -9,24 +9,25 @@ contract RealEstate is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
+    // Constructor, initializing the ERC721 token with a name and symbol
     constructor() ERC721("Real Estate", "REAL"){}
 
+    // Function to mint a new NFT representing a property
     function mint(string memory tokenURI) public returns (uint256){
-        // Increment and Add new token Ids
+        // Increment the token ID counter
         _tokenIds.increment();
-        // Adding new token by new current Token Id
+        // Create a new token ID
         uint256 newItemId = _tokenIds.current();
-        // Mint by Internal Mint Function and new Id
+        // Mint the new token with the new ID
         _mint(msg.sender, newItemId);
-        // Setting token Uri
+        // Set the token URI for the new token
         _setTokenURI(newItemId, tokenURI);
-
+        // Return the new token ID
         return newItemId;
     }
 
+    // Function to get the total number of NFTs minted so far
     function totalSupply() public view returns (uint256) {
-        // Giving how many NFTs currently minted
         return _tokenIds.current();
     }
-
 }
