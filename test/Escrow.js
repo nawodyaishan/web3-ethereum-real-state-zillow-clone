@@ -94,4 +94,17 @@ describe('Escrow', () => {
         });
     })
 
+    describe(`Inspection`, () => {
+
+        beforeEach(async () => {
+            const transaction = await escrow.connect(inspectorAddress).updateInspectionStatus(1, true)
+            await transaction.wait()
+        })
+
+        it('Should updates inspection status', async () => {
+            const result = await escrow.inspectionPassed(1)
+            expect(result).to.be.equal(true)
+        })
+    })
+
 })
