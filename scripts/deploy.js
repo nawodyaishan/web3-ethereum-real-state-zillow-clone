@@ -10,6 +10,8 @@ const tokens = (n) => {
 }
 
 async function main() {
+    const network = await ethers.getDefaultProvider().getNetwork();
+
     // Setup ETH Accounts
     const [buyer, seller, inspector, lender] = await ethers.getSigners()
 
@@ -52,6 +54,8 @@ async function main() {
     await transaction.wait()
 
     console.log(`Finished.`)
+    console.log("Network name=", network.name);
+    console.log("Network chain id=", network.chainId);
 }
 
 
