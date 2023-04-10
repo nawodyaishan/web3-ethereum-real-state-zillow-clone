@@ -90,6 +90,7 @@ contract Escrow {
         require(approval[_nftID][buyer[_nftID]]);
         require(approval[_nftID][seller]);
         require(approval[_nftID][lender]);
+        // Checking whether contract is fully funded
         require(address(this).balance >= purchasePrice[_nftID]);
 
         isListed[_nftID] = false;
