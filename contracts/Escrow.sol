@@ -99,7 +99,7 @@ contract Escrow {
             ""
         );
         require(success);
-
+        // Transfer NFT from this contract to buyer
         IERC721(nftAddress).transferFrom(address(this), buyer[_nftID], _nftID);
     }
 
