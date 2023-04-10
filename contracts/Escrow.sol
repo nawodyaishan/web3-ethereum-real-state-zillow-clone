@@ -12,7 +12,7 @@ interface IERC721 {
 contract Escrow {
     address public nftAddress;
     address payable public seller;
-    address public inspectorAddress;
+    address public inspector;
     address public lender;
 
     modifier onlyBuyer(uint256 _nftID) {
@@ -26,7 +26,7 @@ contract Escrow {
     }
 
     modifier onlyInspector() {
-        require(msg.sender == inspectorAddress, "Only inspector can call this method");
+        require(msg.sender == inspector, "Only inspector can call this method");
         _;
     }
 
@@ -41,7 +41,7 @@ contract Escrow {
     constructor(address _nftAddress, address payable _seller, address _inspector, address _lender) {
         nftAddress = _nftAddress;
         seller = _seller;
-        inspectorAddress = _inspector;
+        inspector = _inspector;
         lender = _lender;
     }
 

@@ -11,7 +11,7 @@ describe('Escrow', () => {
     let escrow
     beforeEach(`Contract Deployment`, async () => {
         // Setup accounts
-        [buyer, seller, inspectorAddress, lender] = await ethers.getSigners()
+        [buyer, seller, inspector, lender] = await ethers.getSigners()
 
         // Deploy realState
         const realEstateContract = await ethers.getContractFactory(`RealEstate`)
@@ -23,7 +23,7 @@ describe('Escrow', () => {
 
         // Deploy Escrow
         const Escrow = await ethers.getContractFactory('Escrow')
-        escrow = await Escrow.deploy(realEstate.address, seller.address, inspectorAddress.address, lender.address)
+        escrow = await Escrow.deploy(realEstate.address, seller.address, inspector.address, lender.address)
 
         // Approve Property
         transaction = await realEstate.connect(seller).approve(escrow.address, 1)
@@ -47,8 +47,8 @@ describe('Escrow', () => {
         });
 
         it('should return inspector', async () => {
-            let resultAddress = await escrow.inspectorAddress()
-            expect(resultAddress).to.be.eq(inspectorAddress.address)
+            let resultAddress = await escrow.inspector()
+            expect(resultAddress).to.be.eq(inspector.address)
         });
 
         it('should return lender', async () => {
@@ -97,7 +97,7 @@ describe('Escrow', () => {
     describe(`Inspection`, () => {
 
         beforeEach(async () => {
-            const transaction = await escrow.connect(inspectorAddress).updateInspectionStatus(1, true)
+            const transaction = await escrow.connect(inspector).updateInspectionStatus(1, true)
             await transaction.wait()
         })
 
@@ -131,7 +131,7 @@ describe('Escrow', () => {
             let transaction = await escrow.connect(buyer).depositEarnest(1, {value: tokens(5)})
             await transaction.wait()
 
-            transaction = await escrow.connect(inspectorAddress).updateInspectionStatus(1, true)
+            transaction = await escrow.connect(inspector).updateInspectionStatus(1, true)
             await transaction.wait()
 
             transaction = await escrow.connect(buyer).approveSale(1)
